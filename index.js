@@ -6,7 +6,13 @@
  * @returns {boolean} whether the wizard can cast the spell
  */
 function canCastSpell(isSpellPrepared, hasScroll) {
-  // TODO
+  if (isSpellPrepared) {
+    return true;
+  } else if (hasScroll) {
+    return true;
+  } else {
+    return false;
+  }
 }
 
 /**
@@ -17,7 +23,8 @@ function canCastSpell(isSpellPrepared, hasScroll) {
  * @returns {boolean} whether the creature is hidden from the observer
  */
 function isHidden(hiding, aware) {
-  // TODO
+  return hiding || !aware;
+  // ! means not, checked solution due to being stuck, saw this new method of completing it, so trying it out for remainder of answers//
 }
 
 /**
@@ -28,7 +35,7 @@ function isHidden(hiding, aware) {
  * @returns {boolean} whether the strike hits
  */
 function doesStrikeHit(attack, ac) {
-  // TODO
+  return attack >= ac;
 }
 
 /**
@@ -39,7 +46,8 @@ function doesStrikeHit(attack, ac) {
  * @returns {boolean} whether the strike is a critical hit
  */
 function doesStrikeCrit(attack, ac) {
-  // TODO
+  return attack <= ac + 10;
+  // + 10 due to it being "10 greater than ac"//
 }
 
 /**
@@ -51,7 +59,13 @@ function doesStrikeCrit(attack, ac) {
  * @returns {number} total hit points after healing
  */
 function heal(maxHp, currentHp, healAmount) {
-  // TODO
+  const maxHp = currentHp + healAmount;
+
+  if (hp > maxHp) {
+    return maxHp;
+  } else {
+    return hp;
+  }
 }
 
 /**
@@ -71,8 +85,25 @@ function heal(maxHp, currentHp, healAmount) {
  * @returns {number} the character's proficiency bonus
  */
 function getProficiencyBonus(level, rank) {
-  // TODO
+if (rank === "untrained") { 
+  return 0;
 }
+
+let bonus = 0;
+
+
+if (rank === "trained") {
+  bonus = 2;
+} else if (rank === "expert") {
+  bonus = 4;
+} else if (rank === "master") {
+  bonus = 6;
+} else (rank === "legendary") {
+  bonus = 8;
+}
+return level + bonus;
+}
+
 
 /**
  * A creature can get a bonus to its armor class (AC) by taking cover.
@@ -85,8 +116,14 @@ function getProficiencyBonus(level, rank) {
  * @returns {number} the cover bonus to AC
  */
 function getCoverBonus(behindObstacle, takingCover) {
-  // TODO
+}if (!behindObstacle + !takingCover) {
+    return 0
+  } else if (takingCover) {
+    return 4
+} else (behindObstacle){
+  return 2
 }
+
 
 /**
  * A creature's current hit points (HP) is reduced by taking damage.
@@ -101,9 +138,15 @@ function getCoverBonus(behindObstacle, takingCover) {
  * @returns {number} the creature's remaining HP after taking damage
  */
 function getRemainingHp(maxHp, currentHp, damage) {
-  // TODO
+const hp = currentHp - damage;
+if (damage > maxHp * 2) {
+    return -1;
+}else if (hp <= 0){
+    return 0;
+} else {
+  return hp;
 }
-
+}
 /**
  * All creatures can see in bright light.
  * Creatures with low-light vision can also see in dim light.
@@ -113,7 +156,15 @@ function getRemainingHp(maxHp, currentHp, damage) {
  * @returns {boolean} whether the creature can see
  */
 function canSee(light, vision) {
-  // TODO
+  if (light === "bright") {
+    return true;
+  } else if (light === "dim") {
+    return vision === "low-light" || vision === "dark";
+    } else if (light === "dark") {
+      return vision === "dark";
+}else {
+  return false;
+}    
 }
 
 /**
@@ -127,5 +178,9 @@ function canSee(light, vision) {
  * @returns {number} damage dealt by the strike
  */
 function getStrikeDamage(attack, ac, damage) {
-  // TODO
+  if (doesStrikeHit(attack, ac)) {
+    return 0;
+  }
+
+  return doesStrikeCrit(attack, ac) ? 2 * damage : damage; 
 }
